@@ -1,5 +1,6 @@
 import { BrowserRouter, Routes, Route } from "react-router-dom";
 import "./App.css";
+import { AuthContextProvider } from "./context/AuthContext";
 import { Main } from "./pages/index";
 
 // bhospajkxqoxqyudpv@nthrl.com
@@ -7,13 +8,15 @@ import { Main } from "./pages/index";
 
 function App() {
   return (
-    <div className="">
-      <BrowserRouter>
-        <Routes>
-          <Route path="/" element={<Main />} />
-        </Routes>
-      </BrowserRouter>
-    </div>
+    <AuthContextProvider>
+      <div className="">
+        <BrowserRouter>
+          <Routes>
+            <Route path="/" element={<Main />} />
+          </Routes>
+        </BrowserRouter>
+      </div>
+    </AuthContextProvider>
   );
 }
 
