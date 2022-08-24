@@ -1,8 +1,8 @@
 import React from "react";
-import Navbar from "../../component/Navbar";
-import Maincomp from "../../component/Main";
-import requests from "../../Requests";
-import Row from "../../component/Row";
+import Navbar from "../component/Navbar";
+import Maincomp from "../component/Main";
+import requests from "../Requests";
+import Row from "../component/Row";
 
 const Main = () => {
   return (

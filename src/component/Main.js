@@ -7,17 +7,10 @@ const Main = () => {
 
   const movie = movies[Math.floor(Math.random() * movies.length)];
 
-  const getMovie = async () => {
-    try {
-      const response = await axios.get(requests.requestPopular);
-      setMovies(response.data.results);
-    } catch (error) {
-      console.error(error);
-    }
-  };
-
   useEffect(() => {
-    getMovie();
+    axios.get(requests.requestPopular).then((response) => {
+      setMovies(response.data.results);
+    });
   }, []);
 
   // console.log(movie);
@@ -36,7 +29,11 @@ const Main = () => {
         <div className="absolute w-full h-[550px] bg-gradient-to-r from-black"></div>
         <img
           className="w-full h-full object-cover"
-          src={`http://image.tmdb.org/t/p/original/${movie?.backdrop_path}`}
+          src={`${
+            !movie
+              ? "https://images.unsplash.com/photo-1578662996442-48f60103fc96?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1170&q=80"
+              : "http://image.tmdb.org/t/p/original/" + movie?.backdrop_path
+          }`}
           alt={movie?.title}
         />
         <div className="absolute w-full top-[20%] p-4 md:p-8">
