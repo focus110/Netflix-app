@@ -6,6 +6,7 @@ const Login = () => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [error, setError] = useState("");
+  const removeError = () => setTimeout(() => setError(""), 3000);
 
   const { user, logIn } = UserAuth();
   const navigate = useNavigate();
@@ -14,14 +15,20 @@ const Login = () => {
     if (user) {
       navigate("/");
     }
-  }, [user]);
+  });
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    try {
-      await logIn(email, password);
-    } catch (error) {
-      setError(error);
+    if (email === "" || password === "") {
+      setError("Compelete all fields");
+      removeError();
+    } else {
+      try {
+        await logIn(email, password);
+      } catch (error) {
+        setError(error.message);
+        removeError();
+      }
     }
   };
 
@@ -36,8 +43,8 @@ const Login = () => {
       <div className="fixed w-full px-4 py-24 z-50">
         <div className="max-w-[450px] h-[600px] mx-auto bg-black/75 text-white">
           <div className="max-w-[320px] mx-auto py-16">
-            <h1 className="text-3xl font-bold">Sign Up</h1>
-            {error ? <p className="p-3 bg-red-400 my-2"></p> : null}
+            <h1 className="text-3xl font-bold">Sign In</h1>
+            {error ? <p className="p-3 bg-red-400 my-2">{error}</p> : null}
             <form onSubmit={handleSubmit} className="w-full flex flex-col py-4">
               <input
                 className="p-3 my-2 bg-gray-700 rounded"
@@ -64,8 +71,8 @@ const Login = () => {
                 <p>Need Help?</p>
               </div>
               <p className="py-4">
-                <span className="text-gray-600">New to Netflix?</span>
-                <Link to="/Signup">Sign In</Link>
+                <span className="text-gray-600 pr-1">New to Netflix? </span>
+                <Link to="/Signup">Sign Up</Link>
               </p>
             </form>
           </div>

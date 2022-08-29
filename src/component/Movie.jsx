@@ -2,6 +2,7 @@ import React, { useState } from "react";
 import { FaHeart, FaRegHeart } from "react-icons/fa";
 
 const Movie = ({ item, id }) => {
+  // eslint-disable-next-line
   const [like, setLike] = useState(false);
   return (
     <div

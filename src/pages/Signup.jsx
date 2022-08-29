@@ -5,6 +5,8 @@ import { UserAuth } from "../context/AuthContext";
 const Signup = () => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
+  const [error, setError] = useState("");
+  const removeError = () => setTimeout(() => setError(""), 3000);
   const { user, signUp } = UserAuth();
   const navigate = useNavigate();
 
@@ -12,14 +14,23 @@ const Signup = () => {
     if (user) {
       navigate("/");
     }
-  }, [user]);
+  });
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    try {
-      await signUp(email, password);
-    } catch (error) {
-      console.log(error);
+    if (email === "" || password === "") {
+      setError("Compelete all fields");
+      removeError();
+    } else if (password.length < 6) {
+      setError("Password should be at least 6 characters");
+      removeError();
+    } else {
+      try {
+        await signUp(email, password);
+      } catch (error) {
+        setError(error.message);
+        removeError();
+      }
     }
   };
 
@@ -35,6 +46,7 @@ const Signup = () => {
         <div className="max-w-[450px] h-[600px] mx-auto bg-black/75 text-white">
           <div className="max-w-[320px] mx-auto py-16">
             <h1 className="text-3xl font-bold">Sign Up</h1>
+            {error ? <p className="p-3 bg-red-400 my-2">{error}</p> : null}
             <form onSubmit={handleSubmit} className="w-full flex flex-col py-4">
               <input
                 className="p-3 my-2 bg-gray-700 rounded"
@@ -61,7 +73,7 @@ const Signup = () => {
                 <p>Need Help?</p>
               </div>
               <p className="py-4">
-                <span className="text-gray-600">
+                <span className="text-gray-600 pr-1">
                   Already subscribed to Netflix?
                 </span>
                 <Link to="/login">Sign In</Link>

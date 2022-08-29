@@ -36,7 +36,7 @@ const Main = () => {
           }`}
           alt={movie?.title}
         />
-        <div className="absolute w-full top-[20%] p-4 md:p-8">
+        <div className="absolute w-full top-[20%] -m-4 p-4 md:-p-8 md:p-8">
           <h1 className="text-3xl md:text-5xl font-bold">{movie?.title}</h1>
           <div className="my-4">
             <button className="border bg-gray-300 text-black border-gray-300 py-2 px-5">
